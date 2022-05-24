@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        
+        //Какой-то неопределённый компонент
+        class Component{
+            constructor(category, name, calory, price){
+                this.category=calory;
+                this.name = name;
+                this.calory=calory;
+                this.price=price;
+            }
+        }
+
+        class Component_Main extends Component{
+            constructor(id=0){
+                edit(id);
+            }
+            edit(id){
+                if(id==0) super("Размер","Малый",10,20);
+                else if(id==1) super("Размер","Большой",20,5);
+                else super("Размер","Не определено",0,0);
+                this.id=id;
+            }
+        }
+
+        class Component_Type extends Component{
+            constructor(id=0){
+                edit(id);
+            }
+            edit(id){
+                if(id==0) super("Вид","С сыром",10,20);
+                else if(id==1) super("Вид","С салатом",20,5);
+                else if(id==2) super("Вид","С картофелем",15,10);
+                else super("Вид","Не определено",0,0);
+                this.id=id;
+            }
+        }
+
+        class Component_Other extends Component{
+            constructor(id=0){
+               edit(id);
+            }
+            edit(id){
+                if(id==0) super("Дополнительно","С сыром",10,20);
+                else if(id==1) super("Дополнительно","С салатом",20,5);
+                else if(id==2) super("Дополнительно","С картофелем",15,10);
+                else super("Дополнительно","Не определено",0,0);
+                this.id=id;
+            }
+        }
+
+
+        class Component_List{
+            constructor(){
+                this.components=[{component:new Component_Main(-1),count:1},{component:new Component_Type(-1),count:1}];
+            }
+            editMain(id){
+                for(let i=0; i<this.components.length;i++){
+                    if(this.components[i].component.category=="Размер"){
+                        this.components[i].component.edit(id);
+                        break;
+                    }
+                }
+            }
+            editType(id){
+                for(let i=0; i<this.components.length;i++){
+                    if(this.components[i].component.category=="Вид"){
+                        this.components[i].component.edit(id);
+                        break;
+                    }
+                }
+            }
+            addOther(id){
+                let finded=false;
+                for(let i=0; i<this.components.length;i++){
+                    if(this.components[i].component.category=="Дополнительно"){
+                        if(id==this.components[i].component.id){
+                            finded=true;
+                            this.components[i].count++;
+                            break;
+                        }
+                    }
+                }
+
+                if(!finded){
+                    this.components.push({component:new Component_Other(id),count:1});
+                }
+            }
+            removeOther(id){
+                let finded=false;
+                for(let i=0; i<this.components.length;i++){
+                    if(this.components[i].component.category=="Дополнительно"){
+                        if(id==this.components[i].component.id){
+                            if(id==this.components[i].count>1){
+                                this.components[i].count--;  
+                            }
+                        }
+                        else{
+                            this.components.splice(i,1);
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+
+
+        class Burger{
+            constructor(size, bType){
+
+            }
+            addOther(other){
+
+            }
+            removeOther(other){
+
+            }
+            clearOther(){
+
+            }
+            getSize(){
+
+            }
+            getType(){
+
+            }
+            updatePrice(){
+
+            }
+            updateCalories(){
+
+            }
+        }
+    </script>
+</body>
+</html>
