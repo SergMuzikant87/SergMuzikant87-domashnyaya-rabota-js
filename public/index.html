@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="header">
+        <h2>Домашнее задание 1</h2>
+        <br>
+        <div class="headerGroup">
+            <fieldset class="headerFilter">
+                <legend>Фильтрация</legend>
+            <fieldset class="headerFilterPrice">
+                <legend>Цена</legend>
+                <label>От</label> <input type="number" value="0">
+                <label>До</label> <input type="number" value="0">
+            </fieldset>
+            <fieldset class="headerFilterCategory">
+                <legend>Категории</legend>
+                <label>Микроконтроллеры</label> <input type="checkbox" checked>
+                <label>Логика</label> <input type="checkbox" checked> 
+                <label>Драйверы</label> <input type="checkbox"> 
+            </fieldset>
+            </fieldset>
+            <fieldset class="headerSort">
+                <legend>Сортировка</legend>
+                <input type="radio" name="sort"><label>По имени</label> <br>
+                <input type="radio" name="sort"><label>По цене</label>  <br>             
+                <input type="radio" name="sort"><label >По чему-то другому</label> <br>
+            </fieldset>
+            <fieldset class="headerCart">
+                
+                <button class="cart-button" type="button">Корзина</button>
+            </fieldset>
+        </div>
+        <hr>
+    </header>
+    <main>
+        <div class="goods-list">   
+            
+        </div>
+    </main>
+    <script src="js/property.js"></script>
+    <script src="js/product.js"></script>
+    <script src="js/index.js"></script>
+</body>
+</html>
