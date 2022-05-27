@@ -16,7 +16,7 @@ class Cart{
         let productIsFound = false;
         //Поиск такого товара в корзине
         for(let i=0; i<this.products.length;i++){
-            if(product.property.id==this.products[i].id){
+            if(product.property.id.value==this.products[i].id){
                 //Если есть, то увличиваем его количество
                 productIsFound=true;
                 this.products[i].count++;
@@ -26,7 +26,7 @@ class Cart{
         //Если же такого товара в корзине нету, то добавляем и говорим что такого товара 1 единица
         if(!productIsFound){
             let newProduct = {
-                id: product.property.id,
+                id: product.property.id.value,
                 name: product.property.name,
                 price: product.price,
                 count: 1,
@@ -38,7 +38,9 @@ class Cart{
     }
     //Удаление 1-й единицы 1-го товара из корзины  (НЕ ТЕСТИРОВАЛ ВОЗМОЖНО ЕСТЬ ОШИБКИ)
     removeProduct(id){
+        
         if(this.products.length>0){
+          
             for(let i=0; i<this.products.length;i++){
                 if(this.products[i].id===id){
                     if(this.products[i].count>0){
@@ -47,8 +49,9 @@ class Cart{
                     else{
                         this.products.splice(this.products.indexOf(this.products[i]),1);
                     }
+                    break;
                 }
-                break;
+               
             }
         }
     }
@@ -124,7 +127,7 @@ class Cart{
             }
         }
     }
-    
+
     //Генерация HTML разметки для корзины
     generateHTML(){
      
