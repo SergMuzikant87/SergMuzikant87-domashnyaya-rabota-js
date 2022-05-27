@@ -18,8 +18,13 @@ cart.addProduct(product_list.products[0]);
 cart.addProduct(product_list.products[0]);
 cart.addProduct(product_list.products[1]);
 cart.addProduct(product_list.products[2]);
+cart.addProduct(product_list.products[2]);
+cart.addProduct(product_list.products[2]);
+cart.addProduct(product_list.products[2]);
+cart.addProduct(product_list.products[2]);
 cart.addProduct(product_list.products[1]);
 cart.removeProduct(1);
 cart.totalUpdate();
 console.log(cart);
+document.getElementById("cart-text").innerHTML=cart.generatePartHTML()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

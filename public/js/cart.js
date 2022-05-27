@@ -36,7 +36,7 @@ class Cart{
             this.products.push(newProduct)
         }
     }
-    //Удаление 1-й единицы 1-го товара из корзины  (НЕ ТЕСТИРОВАЛ ВОЗМОЖНО ЕСТЬ ОШИБКИ)
+    //Удаление 1-й единицы 1-го товара из корзины  
     removeProduct(id){
         
         if(this.products.length>0){
@@ -65,7 +65,7 @@ class Cart{
     }
 
     /**
-     * Пересчёт итоговой стоимости товаров
+     * Пересчёт итоговой стоимости товаров. На входе точки линейной интерполяции, по которой будут скидки.
      * @param {*} x Линейная интерполяция расчёта скидок. Входной массив количества товаров. Значения должны быть по возрастанию и положительные.
      * @param {*} y Линейная интерполяция расчёта скидок. Входной массив скидок. Значения должны быть от 0 до 1. И чаще они идут по возрастанию.
      */
@@ -97,41 +97,50 @@ class Cart{
                 }
                 else
                 {
-                    //Непосредственно линейная онтерполяция
+                    //Непосредственно линейная интерполяция
                     for(let j=0;j<x.length-1;j++)
                     {
                         if((this.products[i].count>=x[j])&&(this.products[i].count<x[j+1])){
                             this.products[i].discount 
                             = 
                             ( ( (this.products[i].count - x[j]) * (y[j+1] - y[j]) ) / (x[j+1] -x[j]) ) +y[j];
-                            //Здесь можно было не округлять, чтобы точность расчётов была выше, а округлять надо для отображения
-                            //this.products[i].discount=Math.round(this.products[i].discount*100.0)/100;
                             break;
-                        }
-                        
+                        }    
                     }
                 }
                 //Затем вычислим стоимость каждого из товаров в корзине с учётом скидок
-                this.products[i].total=this.products[i].price*this.products[i].count*(1.0-this.products[i].discount)
-                //this.products[i].total=Math.round(this.products[i].total*100.0)/100
-
+                this.products[i].total=this.products[i].price*this.products[i].count*(1.0-this.products[i].discount);              
                 //Инкрементируем общую сумму товаров в корзине
-                this.summ+=this.products[i].total
-
-                this.summNoDiscount+=(this.products[i].price*this.products[i].count)
+                this.summ+=this.products[i].total;
+                this.summNoDiscount+=(this.products[i].price*this.products[i].count);
                 //Инкрементируем общую скидку в абсолютных единицах измерения (в рублях)
-                this.discount+=this.products[i].total*(this.products[i].discount)
-                //this.discount=Math.round(this.discount*100.0)/100
+                this.discount+=this.products[i].total*(this.products[i].discount);
                 //Инкрементируем общее количество товара в корзине
-                this.count+=this.products[i].count    
+                this.count+=this.products[i].count;    
             }
         }
     }
 
-    //Генерация HTML разметки для корзины
+    //Генерация HTML разметки для корзины. Возможно здесь будет таблица.
     generateHTML(){
      
 
+    }
+
+    //Генерация HTML рядом со значком корзины на главной странице 
+    generatePartHTML(){
+      this.summNoDiscount=Math.round(this.summNoDiscount*100.0)/100
+      this.discount=Math.round(this.discount*100.0)/100
+      this.summ=Math.round(this.summ*100.0)/100
+      let HTML =
+      `
+     
+        <p> Количество ${this.count} шт. </p>
+        <p> Стоимость ${this.summNoDiscount} руб. </p>
+        <p> Скидки ${this.discount} руб. </p>
+        <p> Итого ${this.summ} руб. </p>
+      `
+      return HTML;
     }
 
 }

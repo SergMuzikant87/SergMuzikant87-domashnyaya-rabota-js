@@ -3,7 +3,6 @@ class Product {
     constructor(property={}, price=0, image="img/1.jpg"){
         this.image=image
         this.property=property;
-        console.log(this.property)
         this.id=this.property.id.value;
         this.name=this.property.name.value;
         this.price=0;
