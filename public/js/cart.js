@@ -64,6 +64,34 @@ class Cart{
         this.discount=0.0
     }
 
+    getProductsFromServer(url, obj){
+        let fetchPromise = fetch(url);
+        fetchPromise.then(promiseResult=>{
+
+           promiseResult.json().then(data =>{
+               console.log(data.Data)
+               this.clearCart()
+               for(let i=0; i<data.Data.length;i++){
+                    let newProduct = {
+                        id: data.Data[i].Product.Property.Id,
+                        name:data.Data[i].Product.Property.Name,
+                        price: data.Data[i].Product.Price,
+                        count: data.Data[i].Count,
+                        discount: 0.0,
+                        total: 0.0
+                    }
+                   this.products.push(newProduct)
+               }
+               this.totalUpdate()
+               obj.innerHTML = this.generatePartHTML()
+           })   
+           
+        })
+        
+       
+       
+    }
+
     /**
      * Пересчёт итоговой стоимости товаров. На входе точки линейной интерполяции, по которой будут скидки.
      * @param {*} x Линейная интерполяция расчёта скидок. Входной массив количества товаров. Значения должны быть по возрастанию и положительные.

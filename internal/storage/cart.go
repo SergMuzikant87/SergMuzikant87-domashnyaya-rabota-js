@@ -12,6 +12,8 @@ type Cart struct {
 	Product_List *[]Cart_Product
 }
 
+//Когда-то может быть будет база даных и поэтому функция будет написана по другому
+//А сейчас это симмулятор
 func (s *Cart) Get_cart_list_from_DB() *[]Cart_Product {
 	var cart_products []Cart_Product
 	var p Cart_Product

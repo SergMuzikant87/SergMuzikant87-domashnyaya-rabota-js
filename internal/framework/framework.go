@@ -13,9 +13,9 @@ type Framework struct {
 
 func (f *Framework) Setup(data *storage.Cart) {
 	f.Data = data
+	f.Router = gin.Default()
 }
 func (f *Framework) Start() error {
-	f.Router = gin.Default()
 	f.Router.LoadHTMLFiles("public/index.html")
 	f.Router.Static("/css", "public/css")
 	f.Router.Static("/js", "public/js")
