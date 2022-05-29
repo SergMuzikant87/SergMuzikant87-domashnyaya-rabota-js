@@ -8,6 +8,7 @@ import (
 func main() {
 	var app framework.Framework
 	var cart_store storage.Cart
-	app.Setup(&cart_store)
+	var product_list_store storage.Products
+	app.Setup(&cart_store, &product_list_store)
 	app.Start()
 }

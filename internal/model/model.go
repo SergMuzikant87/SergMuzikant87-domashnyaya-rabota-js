@@ -18,7 +18,7 @@ type Prop struct {
 	Adc        uint8
 	Timers     uint8
 	Interrupts uint8
-	Brend string
+	Brend      string
 }
 
 type Product struct {
@@ -65,5 +65,6 @@ func AddProduct(
 	p.Property.Timers = Timers
 	p.Property.Interrupts = Interrupts
 	p.Property.Brend = Brend
+	p.Property.Adc = Adc
 	return p
 }
