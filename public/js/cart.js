@@ -10,58 +10,67 @@ class Cart{
         this.count = 0;
         this.discount=0.0
     }
-    //Добавление 1-й единицы одного товара в корзину
+    //Запрос серверу на добавление товара в корзину
     addProduct(product){
-        //Есть такой товар в корзине или нет
-        let productIsFound = false;
-        //Поиск такого товара в корзине
-        for(let i=0; i<this.products.length;i++){
-            if(product.property.id.value==this.products[i].id){
-                //Если есть, то увличиваем его количество
-                productIsFound=true;
-                this.products[i].count++;
-                break;
-            }
-        }
-        //Если же такого товара в корзине нету, то добавляем и говорим что такого товара 1 единица
-        if(!productIsFound){
-            let newProduct = {
-                id: product.property.id.value,
-                name: product.property.name,
-                price: product.price,
-                count: 1,
-                discount: 0.0,
-                total: 0.0
-            }
-            this.products.push(newProduct)
-        }
+      
     }
-    //Удаление 1-й единицы 1-го товара из корзины  
-    removeProduct(id){
-        
-        if(this.products.length>0){
-          
-            for(let i=0; i<this.products.length;i++){
-                if(this.products[i].id===id){
-                    if(this.products[i].count>0){
-                        this.products[i].count--;
-                    }
-                    else{
-                        this.products.splice(this.products.indexOf(this.products[i]),1);
-                    }
-                    break;
-                }
-               
-            }
-        }
+    //Запрос серверу на удаление товара из корзины 
+    removeProduct(product){
+
     }
-    //Очистка корзины
+
+    //Запрос серверу на очистку корзины
     clearCart(){
-        this.products = []
-        this.summNoDiscount = 0.0;
-        this.summ = 0.0;
-        this.count = 0;
-        this.discount=0.0
+
+    }
+    
+    //Запрос серверу на получение товаров
+    getProductsFromServer(url, obj){
+        let fetchPromise = fetch(url);
+        fetchPromise.then(promiseResult=>{
+           console.log(promiseResult)
+           /*
+             Если получать данные с сайта, который указан
+             в методичке, то promiseResult.json() делать не нужно и так данные в JSON,
+             а если с сервера, который в этом проекте, то нужно. Видимо браузер не понял
+             что это JSON. Наверное нужно заголовок ответа редактировать.
+           */
+           promiseResult.json().then(data =>{
+               console.log(data)
+               //Очистка списка товаров, обнуление суммы и т п
+               this.products = []
+               this.summNoDiscount = 0.0;
+               this.summ = 0.0;
+               this.count = 0;
+               this.discount=0.0
+               //То что пришло с сервера копируем в объекты
+               //И добавляем эти обьекты в массив товаров 
+               for(let i=0; i<data.Data.length;i++){
+                    let newProduct = {
+                        id: data.Data[i].Product.Property.Id,
+                        name:data.Data[i].Product.Property.Name,
+                        price: data.Data[i].Product.Price,
+                        count: data.Data[i].Count,
+                        discount: 0.0,
+                        total: 0.0
+                    }
+                   this.products.push(newProduct)
+               }
+               //Считаем скидки, стоимость товаров
+               //Вообще это нужно считать на сервере по сути  
+               this.totalUpdate()
+               obj.innerHTML = this.generatePartHTML()
+           })
+           //Обработка ошибок
+           .catch(err =>{
+               console.log("Ошибка") 
+           })   
+           
+        })
+        //Обработка ошибок
+        .catch(err =>{
+            console.log("Ошибка")     
+        })     
     }
 
     /**

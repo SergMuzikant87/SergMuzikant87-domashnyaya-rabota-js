@@ -1,9 +1,10 @@
 //Товар
 class Product {
-    constructor(property={}, price=0, image="img/1.jpg"){
-        this.image=image
+    constructor(property={}, price=0){
+       
         this.property=property;
         this.id=this.property.id.value;
+        this.image=`img/${this.id}.jpg`;
         this.name=this.property.name.value;
         this.price=0;
         if((price>0) && (!isNaN(price))){
@@ -70,6 +71,53 @@ class Products{
     constructor(products=[]){
         this.products=products;
     }
+
+    //Запрос серверу на получение списка товаров
+    getProductsFromServer(url, obj){
+        let fetchPromise = fetch(url);
+        fetchPromise.then(promiseResult=>{
+           console.log(promiseResult)
+           /*
+             Если получать данные с сайта, который указан
+             в методичке, то promiseResult.json() делать не нужно и так данные в JSON,
+             а если с сервера, который в этом проекте, то нужно. Видимо браузер не понял
+             что это JSON. Наверное нужно заголовок ответа редактировать.
+           */
+           promiseResult.json().then(data =>{
+               //console.log(data)
+               this.products = []
+               //То что пришло с сервера копируем в объекты
+               //И добавляем эти обьекты в массив товаров 
+               for(let i=0; i<data.Data.length;i++){
+                    let newProduct = new Product(new CPU(),100)
+                    newProduct.price=data.Data[i].Price;
+                    newProduct.id=data.Data[i].Property.Id;
+                    newProduct.name=data.Data[i].Property.Name;
+                    newProduct.image=`img/${newProduct.id}.jpg`;
+                    for(let key in data.Data[i].Property){
+                        let key_lowwer_case = String(key);
+                        key_lowwer_case=key_lowwer_case.toLowerCase()
+                        newProduct.property[key_lowwer_case].value=data.Data[i].Property[key]
+                    }  
+                   //console.log(newProduct)
+                   this.products.push(newProduct)   
+               }
+               
+              
+               obj.innerHTML = this.generatePageHTML()
+           })
+           //Обработка ошибок
+           .catch(err =>{
+               console.log("Ошибка") 
+           })   
+           
+        })
+        //Обработка ошибок
+        .catch(err =>{
+            console.log("Ошибка")     
+        })     
+    }
+
     add(product){
         this.products.push(product)
     }
