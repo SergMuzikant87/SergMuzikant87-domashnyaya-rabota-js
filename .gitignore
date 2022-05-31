@@ -1,4 +1,5 @@
-*.exe
+*.exegit
 .vscode/**
-/.vscode/**
+.vscode/*
 .dist/**
+.dist/*

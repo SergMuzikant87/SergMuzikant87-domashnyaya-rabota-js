@@ -14,7 +14,7 @@ class Chip {
 
 class Logic extends Chip{
     constructor(id=0, name="SN74LS00", brend = "", power=5, current=0.05, instruction="2ИЛИ-НЕ", channels=4){
-        super(id=0, name, brend, power, current);
+        super(id=id, name, brend, power, current);
         this.type = {key:"Тип", value:"Логика"};
         this.instruction = {key:"Вид логики", value:instruction};
         this.channels= {key:"Количество каналов", value:channels};
@@ -23,7 +23,7 @@ class Logic extends Chip{
 
 class CPU extends Chip{
     constructor(id=0, name="Atmega328p-pu", brend="Atmel", power = 5, current= 0.05, arh="RISC", flash=32, ram=4, eeprom=16, data_bits=8, max_freq=16, input_output=16, i2c=1, uart=1, spi=1, adc=3, timers=3, interrupts=4){
-        super(id=0, name, brend, power, current);
+        super(id=id, name, brend, power, current);
         this.type = {key:"Тип", value:"Микроконтроллер"};
         this.arh = {key:"Архитектура", value:arh};
         this.data_bits={key:"Шина даных (бит)", value:data_bits};
