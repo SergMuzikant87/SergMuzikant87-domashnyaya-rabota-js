@@ -12,4 +12,5 @@ cart = new Cart()
 let cart_div=document.getElementById("cart-text")
 //Получаем товары с сервера, расчитываем сумму, выводим в НТМЛ контейнер корзины
 cart.getProductsFromServer("/cart",cart_div)
+cart.clearCart()
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
