@@ -1,6 +1,8 @@
 package framework
 
 import (
+	"fmt"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,5 +27,11 @@ func (f *Framework) Route() error {
 			"Error": nil,
 		})
 	})
+
+	//Обработка запроса на очистку корзины
+	f.Router.GET("/cart_clear", func(ctx *gin.Context) {
+		fmt.Println("Запрос на очистку корзины")
+	})
+
 	return nil
 }

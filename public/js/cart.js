@@ -11,8 +11,9 @@ class Cart{
         this.discount=0.0
     }
     //Запрос серверу на добавление товара в корзину
-    addProduct(product){
-      
+    addProduct(){
+       
+        
     }
     //Запрос серверу на удаление товара из корзины 
     removeProduct(product){
@@ -21,7 +22,17 @@ class Cart{
 
     //Запрос серверу на очистку корзины
     clearCart(){
+        const url = "/cart_clear"
+        fetch(url)
+        .then((response) => {
+          return response.json();
+        })
+        .then(() => {
+         
+        })
+        .catch(()=>{
 
+        })
     }
     
     //Запрос серверу на получение товаров
