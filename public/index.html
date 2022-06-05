@@ -7,52 +7,55 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
 </head>
-<body id="app">
-    <header class="header">
-        <h2>Домашнее задание 5</h2>
-        <br>
-        <div class="headerGroup">
-            <fieldset class="headerFilter">
-                <legend>Фильтрация</legend>
-            <fieldset class="headerFilterPrice">
-                <legend>Цена</legend>
-                <label>От</label> <input type="number" value="0">
-                <label>До</label> <input type="number" value="0">
-            </fieldset>
-            <fieldset class="headerFilterCategory">
-                <legend>Категории</legend>
-                <label>Микроконтроллеры</label> <input type="checkbox" checked>
-                <label>Логика</label> <input type="checkbox" checked> 
-                <label>Драйверы</label> <input type="checkbox"> 
-            </fieldset>
-            </fieldset>
-            <fieldset class="headerSort">
-                <legend>Сортировка</legend>
-                <input type="radio" name="sort"><label>По имени</label> <br>
-                <input type="radio" name="sort"><label>По цене</label>  <br>             
-                <input type="radio" name="sort"><label >По чему-то другому</label> <br>
-            </fieldset>
-            <fieldset class="headerCart">
+<body >
+    <div id="app">
+        <header class="header">
+            <h2>Домашнее задание 5</h2>
+            <br>
+            <div class="headerGroup">
+                <fieldset class="headerFilter">
+                    <legend>Фильтрация</legend>
+                <fieldset class="headerFilterPrice">
+                    <legend>Цена</legend>
+                    <label>От</label> <input type="number" value="0">
+                    <label>До</label> <input type="number" value="0">
+                </fieldset>
+                <fieldset class="headerFilterCategory">
+                    <legend>Категории</legend>
+                    <label>Микроконтроллеры</label> <input type="checkbox" checked>
+                    <label>Логика</label> <input type="checkbox" checked> 
+                    <label>Драйверы</label> <input type="checkbox"> 
+                </fieldset>
+                </fieldset>
+                <fieldset class="headerSort">
+                    <legend>Сортировка</legend>
+                    <input type="radio" name="sort"><label>По имени</label> <br>
+                    <input type="radio" name="sort"><label>По цене</label>  <br>             
+                    <input type="radio" name="sort"><label >По чему-то другому</label> <br>
+                </fieldset>
+                <fieldset class="headerCart">
+                    
+                    <button class="cart-button" type="button">Корзина</button>
+                    <div id="cart-text">
+                    </div>
+                </fieldset>
+            </div>
+            <hr>
+        </header>
+        <main>
+            <div class="goods-list">   
                 
-                <button class="cart-button" type="button">Корзина</button>
-                <div id="cart-text">
-                </div>
-            </fieldset>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="goods-list">   
-            
-        </div>
-    </main>
+            </div>
+        </main>
+    </div>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-   <!--  
-    <script src="js/property.js"></script>
-    <script src="js/product.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/index.js"></script>      
-    -->   
+        <!--  
+        <script src="js/property.js"></script>
+        <script src="js/product.js"></script>
+        <script src="js/cart.js"></script>
+        <script src="js/index.js"></script>      
+        -->   
     <script src="js/index_vue.js"></script>
+  
 </body>
 </html>
