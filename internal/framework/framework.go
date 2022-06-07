@@ -20,11 +20,12 @@ func (f *Framework) Setup(cart *storage.Cart, product_list *storage.Products) {
 }
 func (f *Framework) Start() error {
 	//Указываем страницы, которые сервер будет отдавать
-	f.Router.LoadHTMLFiles("public/index.html")
+	//f.Router.LoadHTMLFiles("public/index.html")
 	//Указываем статические файлы
-	f.Router.Static("/css", "public/css")
-	f.Router.Static("/js", "public/js")
-	f.Router.Static("/img", "public/img")
+	//f.Router.Static("/css", "public/css")
+	//f.Router.Static("/js", "public/js")
+	//f.Router.Static("/img", "public/img")
+	f.Router.Static("/public", "public")
 	//Запускаем функцию обработки маршрутов
 	f.Route()
 	//Запускаем сервер на порту 5000 и возвращаем ошибку

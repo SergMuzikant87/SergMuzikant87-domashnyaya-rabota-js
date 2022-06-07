@@ -7,48 +7,144 @@
     <link rel="stylesheet" href="css/style.css">
     <title>Document</title>
 </head>
-<body>
-    <header class="header">
-        <h2>Домашнее задание 3</h2>
-        <br>
-        <div class="headerGroup">
-            <fieldset class="headerFilter">
-                <legend>Фильтрация</legend>
-            <fieldset class="headerFilterPrice">
-                <legend>Цена</legend>
-                <label>От</label> <input type="number" value="0">
-                <label>До</label> <input type="number" value="0">
-            </fieldset>
-            <fieldset class="headerFilterCategory">
-                <legend>Категории</legend>
-                <label>Микроконтроллеры</label> <input type="checkbox" checked>
-                <label>Логика</label> <input type="checkbox" checked> 
-                <label>Драйверы</label> <input type="checkbox"> 
-            </fieldset>
-            </fieldset>
-            <fieldset class="headerSort">
-                <legend>Сортировка</legend>
-                <input type="radio" name="sort"><label>По имени</label> <br>
-                <input type="radio" name="sort"><label>По цене</label>  <br>             
-                <input type="radio" name="sort"><label >По чему-то другому</label> <br>
-            </fieldset>
-            <fieldset class="headerCart">
+<body >
+    <div id="app">
+        <header class="header">
+            <h2>Домашнее задание 5</h2>
+            <br>
+            <div class="headerGroup" v-if="!products_in_cart_show">
+                <fieldset class="headerFilter">
+                    <legend>Фильтрация</legend>
+                <fieldset class="headerFilterPrice">
+                    <legend>Название</legend>
+                    <input type="text" v-model="filter.name">
+                </fieldset>
+                <fieldset class="headerFilterPrice">
+                    <legend>Цена</legend>
+                    <label>От</label> <input type="number" v-model="filter.price_lo" >
+                    <label>До</label> <input type="number" v-model="filter.price_hi">
+                </fieldset>
                 
-                <button class="cart-button" type="button">Корзина</button>
-                <div id="cart-text">
-                </div>
-            </fieldset>
-        </div>
-        <hr>
-    </header>
-    <main>
-        <div class="goods-list">   
+                <fieldset class="headerFilterCategory">
+                    <legend>Категории</legend>
+                    <label>Микроконтроллеры</label> <input type="checkbox" v-model="filter.is_microcontroller">
+                    <label>Логика</label> <input type="checkbox" v-model="filter.is_logic"> 
+                    <label>Драйверы</label> <input type="checkbox" v-model="filter.is_driver"> 
+                </fieldset>
+                </fieldset>
+                <fieldset class="headerSort">
+                    <legend>Сортировка</legend>
+                    <input type="radio" name="sort"><label>По имени</label> <br>
+                    <input type="radio" name="sort"><label>По цене</label>  <br>             
+                    <input type="radio" name="sort"><label >По чему-то другому</label> <br>
+                </fieldset>
+                <fieldset class="headerCart">
+                    
+                    <button v-on:click="cart_show()" class="cart-button" type="button">Корзина</button>
+                    <div id="cart-text">
+                        <p> Количество {{products_in_cart_count}} шт. </p>
+                        <p> Стоимость {{products_in_cart_summ_no_discount}} руб. </p>
+                        <p> Скидки {{products_in_cart_discount}} руб. </p>
+                        <p> Итого {{products_in_cart_summ}} руб. </p>
+                    </div>
+                </fieldset>
+            </div>
+            <hr>
+        </header>
+        <main>
             
+            <div class="goods-list" v-if="!products_in_cart_show">   
+                <!--Карточка товара-->
+                <div class="productCard" v-for="product in products_filtered">      
+                    <img v-bind:src='product.Img' alt="Картинки нету"> 
+                    <div class="productCardText">
+                        <div class="productCardTextType">
+                            <p>Микросхема - {{product.Property.Name}} </p>
+                        </div>
+                        <div class="productCardTextType">
+                            <p>Тип микросхемы - {{product.Property.Type}} </p>
+                        </div>
+                        <div class="productCardTextType">
+                            <p>Производитель - {{product.Property.Brend}} </p>
+                        </div>
+                        <div class="productCardTextProperty">
+                            <p> Характеристики: </p>
+                            <div>
+                                <ul>
+                                    <li v-for="(property, key) in product.Property" 
+                                    v-if="(key != 'Id')&& (key!='Name') && (key!='Brend') && (key!='Type')">
+                                         {{key}} - {{property}} 
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="productCardTextPrice">
+                            <h4>{{product.Price}} руб </h4>
+                        </div>
+                    </div>
+                    <button v-bind:data-id='product.Property.Id'>
+                        Добавить
+                    </button>
+                </div>
+                
+            </div>
+        </main>
+
+        <div class="cart" v-if="products_in_cart_show">
+                <h5>Товары в корзине</h5>
+                <table>
+                    <tr>
+                        <th>Название</th>
+                        <th>Количество</th>
+                        <th>Цена без скидок</th>
+                        <th>Скидка (%)</th>
+                        <th>Цена со скидкой</th>
+                        <th>Скидка (рубли)</th>
+                        <th>Стоимость без скидки</th>
+                        <th>Стоимость со скидкой</th>
+                    </tr>
+                    <tr v-for="product in products_in_cart" v-bind:data-id='product.Id'>
+                        <td>{{product.Name}}</td>
+                        <td>{{product.Count}} шт.</td>
+                        <td>{{product.Price_No_Discount}} руб.</td>
+                        <td>{{product.Discount_Percent}}</td>
+                        <td>{{product.Price}} руб.</td>
+                        <td>{{product.Discount_Absolute}}</td>
+                        <td>{{product.Summ_No_Discount}} руб.</td>
+                        <td>{{product.Summ}} руб.</td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Скидки</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{products_in_cart_discount}} руб.</td>
+                    </tr>
+                    <tr>
+                        <td>Итого</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>{{products_in_cart_summ_no_discount}} руб.</td>
+                        <td>{{products_in_cart_summ}} руб.</td>
+                    </tr>
+                </table>
+                <div>
+                    <button>Оплатить</button> 
+                    <button>Очистить</button>
+                    <button v-on:click="cart_hide()">Выход</button>
+                </div>
+                
         </div>
-    </main>
-    <script src="js/property.js"></script>
-    <script src="js/product.js"></script>
-    <script src="js/cart.js"></script>
-    <script src="js/index.js"></script>    
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+    <script src="js/index_vue.js"></script>
+  
 </body>
 </html>
